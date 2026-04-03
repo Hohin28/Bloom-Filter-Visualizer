@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bloom Filter Visualizer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <canvas id="universe"></canvas>
+
+  <main class="app">
+    <header class="topbar">
+      <div class="title-wrap">
+        <div class="badge-chip">Algorithm Simulator</div>
+        <h1 class="title">Bloom Filter Visualizer</h1>
+        <p class="subtitle">
+          Premium interactive visualization of bit-array hashing with neon motion.
+        </p>
+      </div>
+    </header>
+
+    <section class="grid-layout">
+
+      <aside class="panel glass">
+        <div class="panel-header">
+          <h2>Controls</h2>
+          <div class="tiny">Insert/Search strings and visualize hash locations.</div>
+        </div>
+
+        <div class="group">
+          <label class="label">Initialize Bloom Filter</label>
+
+          <div class="row">
+            <input type="number" id="sizeInput" min="1" max="10000" value="30" class="input" />
+            <input type="number" id="kInput" min="1" max="13" value="3" class="input" />
+            <button class="btn glow" onclick="initBloom()">Initialize</button>
+          </div>
+
+          <div class="hint">
+            M = bit array size, K = number of hash functions
+          </div>
+
+          <!-- ✅ K calculation shown here -->
+          <div class="hint" id="kCalcBox">
+            Recommended K (optimal) will appear here after insert/search.
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="group">
+          <label class="label">Word</label>
+          <input id="wordInput" class="input w100" placeholder="Enter string (example: apple)" />
+          <div class="row mt">
+            <button class="btn success" onclick="insertWord()">Insert</button>
+            <button class="btn info" onclick="searchWord()">Search</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="group">
+          <h3 class="h3">Stats</h3>
+          <div class="stats">
+            <div class="stat"><span>M</span><b id="statM">-</b></div>
+            <div class="stat"><span>K</span><b id="statK">-</b></div>
+            <div class="stat"><span>Inserted (n)</span><b id="statN">-</b></div>
+            <div class="stat wide"><span>False+ Probability</span><b id="statFP">-</b></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="group">
+          <h3 class="h3">Legend</h3>
+          <div id="legend" class="legend"></div>
+          <div class="hint">Each word has a color signature.</div>
+        </div>
+      </aside>
+
+      <section class="main glass" id="mainBox">
+        <div class="edge-walker" aria-hidden="true">
+          <div class="bot">
+            <div class="bot-eye"></div>
+            <div class="bot-eye eye2"></div>
+            <div class="bot-mouth"></div>
+          </div>
+        </div>
+
+        <div class="main-head">
+          <div class="left">
+            <h2>Interactive Bit Array</h2>
+            <p class="micro">Neon pixel bits • hover wobble • ripple waves</p>
+          </div>
+          <div class="right">
+            <div id="resultBadge" class="pill hidden"></div>
+          </div>
+        </div>
+
+        <div class="visual-wrap">
+          <div id="scanLine" class="scan-line hidden"></div>
+          <div id="gridWave" class="grid-wave hidden"></div>
+          <div id="bitArray" class="bit-grid"></div>
+        </div>
+
+        <div class="hash-panel glass-mini">
+          <div class="out-title">Hash Calculation (Step-by-Step)</div>
+          <div id="hashExplain" class="hash-explain">
+            <div class="hint">Insert/Search a word to see hashing steps.</div>
+          </div>
+        </div>
+
+        <div class="output glass-mini">
+          <div class="out-title">Operation Output</div>
+          <pre id="resultBox">{}</pre>
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
